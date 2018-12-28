@@ -42,7 +42,7 @@ class ProjectModuleManager {
         def mainApp = isMainApp(project)
         def assembleFor = isAssembleFor(project)
         def buildingAar = isBuildingAar(localProperties)
-        def alwaysLib = isAlwaysLib(project)
+        def alwaysLib = isAlwaysLib(project,localProperties)
 
         boolean runAsApp = false
         if (mainApp) {
@@ -112,8 +112,8 @@ class ProjectModuleManager {
     static boolean isMainApp(Project project) {
         return project.ext.has(MODULE_MAIN_APP) && project.ext.mainApp
     }
-    static boolean isAlwaysLib(Project project) {
-        if (project.ext.runAsApp) {
+    static boolean isAlwaysLib(Project project,Properties localProperties) {
+        if ('true' ==localProperties.getProperty(project)) {
             println "CC >>> set module: ${project.name} NOT run as lib >>> ProjectModuleManager.Groovy/line#115"
             return false
         }

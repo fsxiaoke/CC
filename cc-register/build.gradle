@@ -18,16 +18,17 @@ ext {
     bintrayName = 'cc-register'
 
     publishedGroupId = 'com.fxiaoke'
-    libraryName = 'CcRegister'
     artifact = 'cc-register'
+    libraryName = 'ccRegister'
+
 
     libraryDescription = 'android component caller'
 
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '1.0.2'
-
+    libraryVersion = '1.1.2'
+    
     developerId = 'billy'
     developerName = 'billy'
     developerEmail = 'okkanan@hotmail.com'
