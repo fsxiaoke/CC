@@ -117,7 +117,7 @@ class ProjectModuleManager {
 
     static boolean isAlwaysLib(Project project, Properties localProperties) {
         if (project.getName() == 'crm') {
-            return localProperties.getProperty("crm")=='false'
+            return !(localProperties.getProperty("crm")=='true')
         } else
             return project.ext.has(MODULE_ALWAYS_LIBRARY) && project.ext.alwaysLib
     }
