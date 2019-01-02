@@ -22,6 +22,7 @@ class ProjectModuleManager {
     //apply了cc-settings-2.gradle的module，但不是组件，而是一直作为library被其它组件依赖
     static final String MODULE_ALWAYS_LIBRARY = "alwaysLib"
 
+
     static String mainModuleName
     static boolean taskIsAssemble
 
@@ -109,15 +110,15 @@ class ProjectModuleManager {
     static boolean isAssembleFor(Project project) {
         return project.name == mainModuleName
     }
+
     static boolean isMainApp(Project project) {
         return project.ext.has(MODULE_MAIN_APP) && project.ext.mainApp
     }
-    static boolean isAlwaysLib(Project project,Properties localProperties) {
-        if ('true' ==localProperties.getProperty(project)) {
-            println "CC >>> set module: ${project.name} NOT run as lib >>> ProjectModuleManager.Groovy/line#115"
-            return false
-        }
-        else
+
+    static boolean isAlwaysLib(Project project, Properties localProperties) {
+        if (project.getName() == 'crm') {
+            return localProperties.getProperty("crm")=='false'
+        } else
             return project.ext.has(MODULE_ALWAYS_LIBRARY) && project.ext.alwaysLib
     }
     //判断当前设置的环境是否为组件打aar包（比如将组件打包上传maven库）
@@ -139,8 +140,8 @@ class ProjectModuleManager {
         def curModuleIsBuildingApk = taskIsAssemble && (mainModuleName == null && isMainApp(project) || mainModuleName == project.name)
         project.ext.addComponent = { dependencyName, realDependency = null ->
             //不是在为本app module打apk包，不添加对组件的依赖
-            //if (!curModuleIsBuildingApk)
-            //   return
+//            if (!curModuleIsBuildingApk)
+//                return
             def excludeModule = 'true' == localProperties.getProperty(dependencyName)
             if (!excludeModule) {
                 def componentProject = project.rootProject.subprojects.find { it.name == dependencyName }
