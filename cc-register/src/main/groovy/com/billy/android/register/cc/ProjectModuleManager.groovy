@@ -116,10 +116,11 @@ class ProjectModuleManager {
     }
 
     static boolean isAlwaysLib(Project project, Properties localProperties) {
-        if (project.getName() == 'crm') {
-            return !(localProperties.getProperty("crm")=='true')
-        } else
-            return project.ext.has(MODULE_ALWAYS_LIBRARY) && project.ext.alwaysLib
+//        if (project.getName() == 'crm') {
+//            return !(localProperties.getProperty(project.getName())=='true')
+//        } else
+            return (project.ext.has(MODULE_ALWAYS_LIBRARY) && project.ext.alwaysLib)||
+                    !(localProperties.getProperty(project.getName())=='true')
     }
     //判断当前设置的环境是否为组件打aar包（比如将组件打包上传maven库）
     static boolean isBuildingAar(Properties localProperties) {
