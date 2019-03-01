@@ -16,7 +16,7 @@ class RegisterExtension {
     ArrayList<RegisterInfo> list = new ArrayList<>()
 
     Project project
-    def cacheEnabled = true
+    def cacheEnabled = false
     def multiProcessEnabled = false
     ArrayList<String> excludeProcessNames = []
 
