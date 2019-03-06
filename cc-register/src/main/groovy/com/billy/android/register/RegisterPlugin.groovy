@@ -18,6 +18,12 @@ public class RegisterPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        boolean ccRegisterEnable = project.ext.has("ccRegisterEnable") && project.ext.ccRegisterEnable
+        if(!ccRegisterEnable){
+            println "ccRegisterEnable:"+ccRegisterEnable
+            return
+        }
+
         println "project(${project.name}) apply ${PLUGIN_NAME} plugin"
         project.extensions.create(EXT_NAME, RegisterExtension)
         def isApp = ProjectModuleManager.manageModule(project)
