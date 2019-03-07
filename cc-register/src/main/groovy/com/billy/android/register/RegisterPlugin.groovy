@@ -18,21 +18,15 @@ public class RegisterPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        boolean ccRegisterEnable = project.ext.has("ccRegisterEnable") && project.ext.ccRegisterEnable
-        if(!ccRegisterEnable){
-            println "ccRegisterEnable:"+ccRegisterEnable
-            return
-        }
-
         println "project(${project.name}) apply ${PLUGIN_NAME} plugin"
         project.extensions.create(EXT_NAME, RegisterExtension)
         def isApp = ProjectModuleManager.manageModule(project)
         performBuildTypeCache(project, isApp)
         if (isApp) {
             println "project(${project.name}) register ${PLUGIN_NAME} transform"
-            def android = project.extensions.getByType(AppExtension)
+//            def android = project.extensions.getByType(AppExtension)
             def transformImpl = new RegisterTransform(project)
-            android.registerTransform(transformImpl)
+//            android.registerTransform(transformImpl)
             project.afterEvaluate {
                 RegisterExtension config = init(project, transformImpl)//此处要先于transformImpl.transform方法执行
                 if (config.multiProcessEnabled) {

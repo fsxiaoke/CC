@@ -50,7 +50,7 @@ class RegisterCache {
         if (cacheFile.exists()) {
             return (cacheFile.text == 'true') == isApp
         }
-        return false
+        return true
     }
 
     static void cacheBuildType(Project project, boolean isApp) {

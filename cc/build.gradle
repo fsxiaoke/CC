@@ -42,7 +42,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'cc-register'
 
-    publishedGroupId = 'com.fxiaoke'
+    publishedGroupId = 'com.billy.android'
     libraryName = 'cc-Register'
     artifact = 'cc'
 
@@ -51,7 +51,7 @@ ext {
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '2.1.1'
 
     developerId = 'billy'
     developerName = 'billy'
@@ -62,16 +62,45 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-//apply from: rootProject.file('bintray.gradle')
+apply from: rootProject.file('bintray.gradle')
 
-apply plugin: 'maven'
+//apply plugin: 'maven'
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../repo-local')) //deploy到本地仓库
+//            pom.groupId = publishedGroupId
+//            pom.artifactId = artifact
+//            pom.version = libraryVersion + '-SNAPSHOT'
+//        }
+//    }
+//}
+
+
+gradle.ext.mavenUrl = "http://maven.firstshare.cn/artifactory/libs-release-local"
+gradle.ext.mavenDevUrl = "http://maven.firstshare.cn/artifactory/libs-snapshot-local"
+gradle.ext.mavenUserName = "deployer"
+gradle.ext.mavenPwd = "fxiaoke"
+/**
+ * 发布到maven
+ */
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri('../repo-local')) //deploy到本地仓库
-            pom.groupId = publishedGroupId
-            pom.artifactId = artifact
-            pom.version = libraryVersion + '-SNAPSHOT'
+            repository(url: gradle.mavenUrl) {
+                authentication(userName: gradle.mavenUserName, password: gradle.mavenPwd)
+            }
+
+            snapshotRepository(url: gradle.mavenDevUrl) {
+                authentication(userName: gradle.mavenUserName, password: gradle.mavenPwd)
+            }
+
+
         }
+    }
+    doFirst {
+        repositories.mavenDeployer.pom.version = "$project.version"
+        repositories.mavenDeployer.pom.artifactId = "$project.name"
+        repositories.mavenDeployer.pom.groupId = publishedGroupId
     }
 }

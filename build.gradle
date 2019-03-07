@@ -8,6 +8,8 @@ buildscript {
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         google()
         jcenter()
+        maven { url "http://maven.firstshare.cn/artifactory/libs-release-local"}
+        maven {  url "http://maven.firstshare.cn/artifactory/libs-snapshot-local" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -15,7 +17,7 @@ buildscript {
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.billy.android:cc-register:1.0.6'
+        classpath 'com.billy.android:cc-register:1.1.12'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -24,9 +26,12 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{ url rootProject.file("repo-local") }
         maven { url "https://jitpack.io" }
         google()
         jcenter()
+        maven { url "http://maven.firstshare.cn/artifactory/libs-release-local"}
+        maven {  url "http://maven.firstshare.cn/artifactory/libs-snapshot-local" }
     }
 
     tasks.withType(Javadoc) {
@@ -45,7 +50,7 @@ ext {
     supportVersion = '25.3.1'
 
     deps = [
-        cc       : 'com.billy.android:cc:2.1.1'
+            cc       : 'com.billy.android:cc:2.1.1'
 //        cc       : project(':cc')
     ]
 }

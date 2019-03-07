@@ -18,7 +18,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'objpool'
 
-    publishedGroupId = 'com.fxiaoke'
+    publishedGroupId = 'com.billy.android'
     libraryName = 'ObjPool'
     artifact = 'pools'
 
@@ -27,7 +27,7 @@ ext {
     siteUrl = 'https://github.com/luckybilly/CC'
     gitUrl = 'git@github.com:luckybilly/CC.git'
 
-    libraryVersion = '1.0.0' //要发布到 jcenter 上的版本号
+    libraryVersion = '0.0.5' //要发布到 jcenter 上的版本号
 
     developerId = 'billy'
     developerName = 'billy'
@@ -38,4 +38,33 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-//apply from: rootProject.file('bintray.gradle')
+apply from: rootProject.file('bintray.gradle')
+
+
+gradle.ext.mavenUrl = "http://maven.firstshare.cn/artifactory/libs-release-local"
+gradle.ext.mavenDevUrl = "http://maven.firstshare.cn/artifactory/libs-snapshot-local"
+gradle.ext.mavenUserName = "deployer"
+gradle.ext.mavenPwd = "fxiaoke"
+/**
+ * 发布到maven
+ */
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: gradle.mavenUrl) {
+                authentication(userName: gradle.mavenUserName, password: gradle.mavenPwd)
+            }
+
+            snapshotRepository(url: gradle.mavenDevUrl) {
+                authentication(userName: gradle.mavenUserName, password: gradle.mavenPwd)
+            }
+
+
+        }
+    }
+    doFirst {
+        repositories.mavenDeployer.pom.version = "$project.version"
+        repositories.mavenDeployer.pom.artifactId = "$project.name"
+        repositories.mavenDeployer.pom.groupId = publishedGroupId
+    }
+}

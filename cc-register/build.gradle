@@ -10,14 +10,14 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile 'com.android.tools.build:gradle:2.2.0'
+    compile 'com.android.tools.build:gradle:3.0.1'
 }
 
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'cc-register'
 
-    publishedGroupId = 'com.fxiaoke'
+    publishedGroupId = 'com.billy.android'
     artifact = 'cc-register'
     libraryName = 'ccRegister'
 
@@ -27,7 +27,7 @@ ext {
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '1.1.11'
+    libraryVersion = '1.1.12'
     
     developerId = 'billy'
     developerName = 'billy'
