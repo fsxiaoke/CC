@@ -66,7 +66,7 @@ class ComponentManager {
     /**
      * 注册组件
      */
-    static void registerComponent(IComponent component) {
+    public static void registerComponent(IComponent component) {
         if (component != null) {
             try{
                 String name = component.getName();
