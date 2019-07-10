@@ -282,7 +282,7 @@ public class CCUtil {
         Intent intent = createNavigateIntent(cc, activityClass);
         RemoteCC remoteCC = new RemoteCC(cc);
         intent.putExtra(EXTRA_KEY_REMOTE_CC, remoteCC);
-        intent.putExtra(EXTRA_KEY_CALL_ID, cc.getCallId());
+//        intent.putExtra(EXTRA_KEY_CALL_ID, cc.getCallId());
         cc.getContext().startActivity(intent);
     }
 
@@ -296,6 +296,7 @@ public class CCUtil {
     public static Intent createNavigateIntent(CC cc, Class<? extends Activity> activityClass) {
         Context context = cc.getContext();
         Intent intent = new Intent(context, activityClass);
+        intent.putExtra(EXTRA_KEY_CALL_ID, cc.getCallId());
         if (!(context instanceof Activity)) {
             //调用方没有设置context或app间组件跳转，context为application
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
