@@ -296,12 +296,18 @@ public class CCUtil {
     public static Intent createNavigateIntent(CC cc, Class<? extends Activity> activityClass) {
         Context context = cc.getContext();
         Intent intent = new Intent(context, activityClass);
-        intent.putExtra(EXTRA_KEY_CALL_ID, cc.getCallId());
+        fillIntentWithCallId(cc,intent);
         if (!(context instanceof Activity)) {
             //调用方没有设置context或app间组件跳转，context为application
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         return intent;
+    }
+
+    public static void fillIntentWithCallId(CC cc, Intent intent) {
+        if(intent !=null){
+            intent.putExtra(EXTRA_KEY_CALL_ID, cc.getCallId());
+        }
     }
 
     /**
