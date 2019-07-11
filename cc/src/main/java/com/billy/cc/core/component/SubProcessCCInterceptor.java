@@ -94,7 +94,7 @@ class SubProcessCCInterceptor implements ICCInterceptor {
             try {
                 service = connectionCache.get(processName);
                 if (service == null) {
-                    //app内部多进程
+                    //获取跨进程通信的binder
                     service = getMultiProcessService(processName);
                     if (service != null) {
                         connectionCache.put(processName, service);
@@ -129,6 +129,7 @@ class SubProcessCCInterceptor implements ICCInterceptor {
                     }
                 });
             } catch (DeadObjectException e) {
+                RemoteCCService.remove(processName);
                 connectionCache.remove(processName);
                 call(remoteCC);
             } catch (Exception e) {

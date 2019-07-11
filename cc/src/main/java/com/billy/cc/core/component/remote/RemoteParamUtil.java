@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.util.Size;
-import android.util.SizeF;
+import android.text.TextUtils;
 import android.util.SparseArray;
 
+import com.billy.cc.core.component.CC;
 import com.billy.cc.core.component.IParamJsonConverter;
 
 import org.json.JSONArray;
@@ -43,6 +42,13 @@ public class RemoteParamUtil {
             return paramJsonConverter.object2Json(object);
         }
         return object == null ? null : object.toString();
+    }
+
+    public static <T> T convertJson2Object(String json, Class<T> clazz) {
+        if (!TextUtils.isEmpty(json) && clazz != null && paramJsonConverter != null) {
+            return paramJsonConverter.json2Object(json, clazz);
+        }
+        return null;
     }
 
     /**
@@ -101,10 +107,10 @@ public class RemoteParamUtil {
                 || v instanceof String[]                || v instanceof int[]
                 || v instanceof byte[]                  || v instanceof long[]
                 || v instanceof double[]                || v instanceof boolean[]
-                || v instanceof Bundle                  || v instanceof PersistableBundle
+                || v instanceof Bundle
                 || v instanceof Parcelable              || v instanceof Parcelable[]
                 || v instanceof CharSequence[]          || v instanceof IBinder
-                || v instanceof Size                    || v instanceof SizeF ) {
+                ) {
             return v;
         } else if (v instanceof SparseArray) {
             SparseArray sa = (SparseArray) v;
@@ -143,7 +149,13 @@ public class RemoteParamUtil {
 
         BaseParam(Parcel in) {
             hashCode = in.readInt();
-            clazz = (Class<?>) in.readSerializable();
+            try {
+                clazz = (Class<?>) in.readSerializable();
+            } catch(Exception e) {
+                if (CC.isDebugMode()) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
