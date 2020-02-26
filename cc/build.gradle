@@ -52,7 +52,7 @@ ext {
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '2.1.6'
+    libraryVersion = '2.1.7'
 
     developerId = 'billy'
     developerName = 'billy'
