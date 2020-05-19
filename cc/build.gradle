@@ -34,6 +34,9 @@ dependencies {
     compile "com.billy.android:pools:0.0.6"
     compileOnly "com.android.support:appcompat-v7:${rootProject.supportVersion}"
     compileOnly project(':android_internal')
+    compileOnly files("./libs/fastjson_fs.1.1.65.jar")
+
+
 }
 
 sourceCompatibility = 1.7
@@ -52,7 +55,7 @@ ext {
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '2.1.7'
+    libraryVersion = '2.1.8'
 
     developerId = 'billy'
     developerName = 'billy'

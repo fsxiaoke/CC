@@ -8,3 +8,5 @@
 .externalNativeBuild
 repo-local
 *.pyc
+.project
+.settings/org.eclipse.buildship.core.prefs

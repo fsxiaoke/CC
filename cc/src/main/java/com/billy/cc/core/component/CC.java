@@ -11,12 +11,16 @@ import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.billy.android.pools.ObjPool;
 
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -401,6 +405,7 @@ public class CC {
      * @param <T> 泛型，返回值的类型
      * @return 未设置key（使用默认key）的参数
      */
+    @Deprecated
     public <T> T getParamItemWithNoKey(T defaultValue) {
         return getParamItem(CC_NULL_KEY, defaultValue);
     }
@@ -410,6 +415,7 @@ public class CC {
      * @param <T> 泛型，返回值的类型
      * @return 未设置key（使用默认key）的参数
      */
+    @Deprecated
     public <T> T getParamItemWithNoKey() {
         return getParamItem(CC_NULL_KEY);
     }
@@ -421,6 +427,7 @@ public class CC {
      * @param <T> class to cast for param
      * @return class casted param
      */
+    @Deprecated
     public <T> T getParamItem(String key, T defaultValue) {
         T item = getParamItem(key);
         if (item == null) {
@@ -435,14 +442,119 @@ public class CC {
      * @param <T> class to cast for param
      * @return class casted param
      */
+    @Deprecated
     public <T> T getParamItem(String key) {
-        try {
-            return (T) params.get(key);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return (T) params.get(key);
     }
+
+    public <T> T getObject(String key, Class<T> clazz) {
+        Object obj = params.get(key);
+        return TypeUtils.castToJavaBean(obj, clazz);
+    }
+
+    public Boolean getBoolean(String key) {
+        Object value = params.get(key);
+        return value == null ? null : TypeUtils.castToBoolean(value);
+    }
+
+    public byte[] getBytes(String key) {
+        Object value = params.get(key);
+        return value == null ? null : TypeUtils.castToBytes(value);
+    }
+
+    public boolean getBooleanValue(String key) {
+        Object value = params.get(key);
+        Boolean booleanVal = TypeUtils.castToBoolean(value);
+        return booleanVal == null ? false : booleanVal;
+    }
+
+    public Byte getByte(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToByte(value);
+    }
+
+    public byte getByteValue(String key) {
+        Object value = params.get(key);
+        Byte byteVal = TypeUtils.castToByte(value);
+        return byteVal == null ? 0 : byteVal;
+    }
+
+    public Short getShort(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToShort(value);
+    }
+
+    public short getShortValue(String key) {
+        Object value = params.get(key);
+        Short shortVal = TypeUtils.castToShort(value);
+        return shortVal == null ? 0 : shortVal;
+    }
+
+    public Integer getInteger(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToInt(value);
+    }
+
+    public int getIntValue(String key) {
+        Object value = params.get(key);
+        Integer intVal = TypeUtils.castToInt(value);
+        return intVal == null ? 0 : intVal;
+    }
+
+    public Long getLong(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToLong(value);
+    }
+
+    public long getLongValue(String key) {
+        Object value = params.get(key);
+        Long longVal = TypeUtils.castToLong(value);
+        return longVal == null ? 0L : longVal;
+    }
+
+    public Float getFloat(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToFloat(value);
+    }
+
+    public float getFloatValue(String key) {
+        Object value = params.get(key);
+        Float floatValue = TypeUtils.castToFloat(value);
+        return floatValue == null ? 0.0F : floatValue;
+    }
+
+    public Double getDouble(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToDouble(value);
+    }
+
+    public double getDoubleValue(String key) {
+        Object value = params.get(key);
+        Double doubleValue = TypeUtils.castToDouble(value);
+        return doubleValue == null ? 0.0D : doubleValue;
+    }
+
+    public BigDecimal getBigDecimal(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToBigDecimal(value);
+    }
+
+    public BigInteger getBigInteger(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToBigInteger(value);
+    }
+
+    public String getString(String key) {
+        Object value = params.get(key);
+        return value == null ? null : value.toString();
+    }
+
+    public Date getDate(String key) {
+        Object value = params.get(key);
+        return TypeUtils.castToDate(value);
+    }
+
+
 
     boolean isAsync() {
         return async;
