@@ -1,0 +1,6 @@
+#!/bin/bash
+./gradlew \
+pools:upload \
+cc:upload \
+cc-register:upload
+
