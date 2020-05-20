@@ -55,7 +55,7 @@ ext {
     siteUrl = 'https://github.com/fsxiaoke/CC'
     gitUrl = 'https://github.com/fsxiaoke/CC.git'
 
-    libraryVersion = '2.1.9'
+    libraryVersion = '2.1.10'
 
     developerId = 'billy'
     developerName = 'billy'

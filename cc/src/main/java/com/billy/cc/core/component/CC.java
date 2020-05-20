@@ -11,10 +11,12 @@ import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.billy.android.pools.ObjPool;
 
-import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
@@ -359,7 +361,7 @@ public class CC {
 
     @Override
     public String toString() {
-        JSONObject json = new JSONObject();
+        org.json.JSONObject json = new org.json.JSONObject();
         put(json, "callId", callId);
         put(json, "context", getContext());
         put(json, "componentName", componentName);
@@ -447,116 +449,266 @@ public class CC {
         return (T) params.get(key);
     }
 
-    public Object getObject(String key) {
-        Object obj = params.get(key);
-        return obj;
+
+    public Object get(Object key) {
+        return params.get(key);
     }
+
+    public com.alibaba.fastjson.JSONObject getJSONObject(String key) {
+        Object value = params.get(key);
+        if (value instanceof com.alibaba.fastjson.JSONObject) {
+            return (com.alibaba.fastjson.JSONObject)value;
+        } else {
+            try {
+                return value instanceof String ? JSON.parseObject((String)value) : (JSONObject) JSONObject.toJSON(value);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public JSONArray getJSONArray(String key) {
+        Object value = params.get(key);
+        if (value instanceof JSONArray) {
+            return (JSONArray)value;
+        } else {
+            try {
+                return value instanceof String ? (JSONArray) JSON.parse((String) value) : (JSONArray) JSONObject.toJSON(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
 
     public <T> T getObject(String key, Class<T> clazz) {
         Object obj = params.get(key);
-        return TypeUtils.castToJavaBean(obj, clazz);
+        try {
+            return TypeUtils.castToJavaBean(obj, clazz);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Boolean getBoolean(String key) {
         Object value = params.get(key);
-        return value == null ? null : TypeUtils.castToBoolean(value);
+        try {
+            return value == null ? null : TypeUtils.castToBoolean(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public byte[] getBytes(String key) {
         Object value = params.get(key);
-        return value == null ? null : TypeUtils.castToBytes(value);
+        try {
+            return value == null ? null : TypeUtils.castToBytes(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean getBooleanValue(String key) {
         Object value = params.get(key);
-        Boolean booleanVal = TypeUtils.castToBoolean(value);
-        return booleanVal == null ? false : booleanVal;
+        try {
+            Boolean booleanVal = TypeUtils.castToBoolean(value);
+            return booleanVal == null ? false : booleanVal;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Byte getByte(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToByte(value);
+        try {
+            return TypeUtils.castToByte(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public byte getByteValue(String key) {
         Object value = params.get(key);
-        Byte byteVal = TypeUtils.castToByte(value);
-        return byteVal == null ? 0 : byteVal;
+        try {
+            Byte byteVal = TypeUtils.castToByte(value);
+            return byteVal == null ? 0 : byteVal;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public Short getShort(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToShort(value);
+        try {
+            return TypeUtils.castToShort(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public short getShortValue(String key) {
         Object value = params.get(key);
-        Short shortVal = TypeUtils.castToShort(value);
-        return shortVal == null ? 0 : shortVal;
+        try {
+            Short shortVal = TypeUtils.castToShort(value);
+            return shortVal == null ? 0 : shortVal;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public Integer getInteger(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToInt(value);
+        try {
+            return TypeUtils.castToInt(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public int getIntValue(String key) {
         Object value = params.get(key);
-        Integer intVal = TypeUtils.castToInt(value);
-        return intVal == null ? 0 : intVal;
+        try {
+            Integer intVal = TypeUtils.castToInt(value);
+            return intVal == null ? 0 : intVal;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public Long getLong(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToLong(value);
+        try {
+            return TypeUtils.castToLong(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public long getLongValue(String key) {
         Object value = params.get(key);
-        Long longVal = TypeUtils.castToLong(value);
-        return longVal == null ? 0L : longVal;
+        try {
+            Long longVal = TypeUtils.castToLong(value);
+            return longVal == null ? 0L : longVal;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
     }
 
     public Float getFloat(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToFloat(value);
+        try {
+            return TypeUtils.castToFloat(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public float getFloatValue(String key) {
         Object value = params.get(key);
-        Float floatValue = TypeUtils.castToFloat(value);
-        return floatValue == null ? 0.0F : floatValue;
+        try {
+            Float floatValue = TypeUtils.castToFloat(value);
+            return floatValue == null ? 0.0F : floatValue;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0F;
     }
 
     public Double getDouble(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToDouble(value);
+        try {
+            return TypeUtils.castToDouble(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public double getDoubleValue(String key) {
         Object value = params.get(key);
         Double doubleValue = TypeUtils.castToDouble(value);
-        return doubleValue == null ? 0.0D : doubleValue;
+        try {
+            return doubleValue == null ? 0.0D : doubleValue;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0D;
     }
 
     public BigDecimal getBigDecimal(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToBigDecimal(value);
+        try {
+            return TypeUtils.castToBigDecimal(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public BigInteger getBigInteger(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToBigInteger(value);
+        try {
+            return TypeUtils.castToBigInteger(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String getString(String key) {
         Object value = params.get(key);
-        return value == null ? null : value.toString();
+        try {
+            return value == null ? null : value.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Date getDate(String key) {
         Object value = params.get(key);
-        return TypeUtils.castToDate(value);
+
+        try {
+            return TypeUtils.castToDate(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
