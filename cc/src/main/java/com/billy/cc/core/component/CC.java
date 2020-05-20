@@ -447,6 +447,11 @@ public class CC {
         return (T) params.get(key);
     }
 
+    public Object getObject(String key) {
+        Object obj = params.get(key);
+        return obj;
+    }
+
     public <T> T getObject(String key, Class<T> clazz) {
         Object obj = params.get(key);
         return TypeUtils.castToJavaBean(obj, clazz);
