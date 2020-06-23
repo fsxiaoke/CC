@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -191,8 +192,48 @@ public class CC {
         public Builder setContext(Context context) {
             if (context != null) {
                 cr.context = new WeakReference<>(context);
+
             }
             return this;
+        }
+
+        private void addLifeObserver(Context context){
+            if(context instanceof FragmentActivity){
+                FragmentActivity activity = (FragmentActivity) context;
+                activity.getLifecycle().addObserver(new GenericLifecycleObserverAdapter() {
+                    @Override
+                    protected void onCreate(LifecycleOwner source) {
+                        super.onCreate(source);
+                    }
+
+                    @Override
+                    protected void onStart(LifecycleOwner source) {
+                        super.onStart(source);
+                    }
+
+                    @Override
+                    protected void onResume(LifecycleOwner source) {
+                        super.onResume(source);
+                    }
+
+                    @Override
+                    protected void onPause(LifecycleOwner source) {
+                        super.onPause(source);
+                    }
+
+                    @Override
+                    protected void onStop(LifecycleOwner source) {
+                        super.onStop(source);
+                    }
+
+                    @Override
+                    protected void onDestroy(LifecycleOwner source) {
+                        super.onDestroy(source);
+                        if()
+                    }
+                });
+            }
+
         }
 
         /**
@@ -971,6 +1012,28 @@ public class CC {
         return !async || callback != null;
     }
 
+
+    /**
+     * 可执行多次回调
+     * @param callId
+     * @param ccResult
+     */
+    public static void sendCCCallback(String callId, CCResult ccResult) {
+        CC cc = CCMonitor.getById(callId);
+        if (cc != null) {
+            if(!cc.isFinished()){
+                if (ccResult == null) {
+                    ccResult = CCResult.defaultNullResult();
+                    logError("CC.sendCCCallback called, But ccResult is null, set it to CCResult.defaultNullResult(). "
+                            + "ComponentName=" + cc.getComponentName());
+                }
+                IComponentCallback callback = cc.getCallback();
+                if(callback != null){
+                    callback.onResult(cc,ccResult);
+                }
+            }
+        }
+    }
     /**
      * 在任意位置回调结果
      * 组件的onCall方法被调用后，<b>必须确保所有分支均会调用</b>到此方法将组件调用结果回调给调用方
