@@ -144,6 +144,11 @@ public class CCResult {
     public static CCResult errorUnsupportedActionName() {
         return error(CODE_ERROR_UNSUPPORTED_ACTION_NAME);
     }
+    public static CCResult errorUnsupportedActionName(String message) {
+        CCResult result = error(CODE_ERROR_UNSUPPORTED_ACTION_NAME);
+        result.setErrorMessage(message);
+        return result;
+    }
 
     static CCResult error(int code) {
         CCResult result = new CCResult();
