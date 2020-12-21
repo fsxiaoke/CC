@@ -197,43 +197,6 @@ public class CC {
             return this;
         }
 
-        private void addLifeObserver(Context context){
-            if(context instanceof FragmentActivity){
-                FragmentActivity activity = (FragmentActivity) context;
-                activity.getLifecycle().addObserver(new GenericLifecycleObserverAdapter() {
-                    @Override
-                    protected void onCreate(LifecycleOwner source) {
-                        super.onCreate(source);
-                    }
-
-                    @Override
-                    protected void onStart(LifecycleOwner source) {
-                        super.onStart(source);
-                    }
-
-                    @Override
-                    protected void onResume(LifecycleOwner source) {
-                        super.onResume(source);
-                    }
-
-                    @Override
-                    protected void onPause(LifecycleOwner source) {
-                        super.onPause(source);
-                    }
-
-                    @Override
-                    protected void onStop(LifecycleOwner source) {
-                        super.onStop(source);
-                    }
-
-                    @Override
-                    protected void onDestroy(LifecycleOwner source) {
-                        super.onDestroy(source);
-                    }
-                });
-            }
-
-        }
 
         /**
          * 不限制超时时间
