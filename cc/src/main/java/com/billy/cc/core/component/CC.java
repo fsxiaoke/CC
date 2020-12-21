@@ -229,7 +229,6 @@ public class CC {
                     @Override
                     protected void onDestroy(LifecycleOwner source) {
                         super.onDestroy(source);
-                        if()
                     }
                 });
             }
